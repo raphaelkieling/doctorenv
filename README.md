@@ -58,6 +58,24 @@ new Builder()
   .start();
 ```
 
+### How to contribute?
+
+Would be a pleasure to have you contributing to this project. Feel free to open a PR with your changes.
+
+- Fork the project
+- Create a branch
+- Make your changes
+- Open a PR
+
+### Publishing
+
+Based on: https://docs.npmjs.com/cli/v8/commands/npm-version
+
+```sh
+npm version patch
+npm publish
+```
+
 <small>
 Temporary Icon from: <a href="https://www.flaticon.com/free-icons/pharmacist" title="Pharmacist icons">Pharmacist icons created by Freepik - Flaticon</a>
 </small>
