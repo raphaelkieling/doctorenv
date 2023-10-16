@@ -1,4 +1,4 @@
-import { Definition } from "./definition.js";
+import { Definition, DefinitionStatus } from "./definition.js";
 import chalk from "chalk";
 
 export async function readFile(filePath) {
@@ -20,6 +20,9 @@ export async function readFromData(data) {
 
 function printDefinitions(definition, depth = 0) {
   print(definition, depth);
+
+  if (definition.definitions.length === 0) return;
+
   definition.definitions.forEach((definition) => {
     print(definition, depth + 1);
   });
@@ -27,8 +30,8 @@ function printDefinitions(definition, depth = 0) {
 
 function print(definition, depth) {
   const tab = "\t".repeat(depth);
-  if (definition.checker) {
-    if (definition.checker()) {
+  if (!definition.isGroup) {
+    if (definition.status === DefinitionStatus.SUCCESS) {
       // The definition is finalized
       console.log(`${tab}${chalk.gray(`• ${definition.name}`)}`);
     } else {
@@ -43,10 +46,6 @@ function print(definition, depth) {
   } else {
     const groupped = definition.isGroup ? "❯" : "";
     const color = definition.hasSucceed ? "gray" : "red";
-    console.log(
-      chalk[color](
-        `${groupped} ${tab}${definition.name} (${definition.status})`
-      )
-    );
+    console.log(chalk[color](`${groupped} ${tab}${definition.name}`));
   }
 }

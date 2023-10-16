@@ -53,7 +53,7 @@ import { Builder } from "doctorenv";
 
 new Builder()
   .createDefinition("Definition 1")
-  .addChecker("has yarn", () => true)
+  .addChecker("has yarn", ({ bash }) => bash("npm --version"))
   .addChecker("has npm", () => true)
   .start();
 ```

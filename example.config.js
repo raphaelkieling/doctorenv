@@ -1,13 +1,13 @@
 export default [
   {
     name: "NPM or YARN",
-    definitions: [
-      {
-        name: "has yarn",
-        suggestions: ["install yarn"],
-        checker: () => true,
-      },
-    ],
+    suggestions: ["install yarn or npm"],
+    checker: async ({ bash }) => {
+      await bash("npm --version");
+      await bash("yarn --version");
+
+      return true;
+    },
   },
   {
     name: "Docker",
@@ -18,7 +18,6 @@ export default [
         name: "has docker",
         suggestions: ["visit: https://www.docker.com"],
         checker: ({ definition }) => {
-          console.log(definition);
           definition.pushSuggestion("Install docker friend");
           return false;
         },

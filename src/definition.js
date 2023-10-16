@@ -35,6 +35,38 @@ export class Definition {
     this.suggestions.push(suggestion);
   }
 
+  async executeBashScript(payload, options = {}) {
+    return new Promise(async (resolve, reject) => {
+      const { exec } = await import("child_process");
+
+      exec(payload, (error, stdout, stderr) => {
+        if (options?.debug) {
+          console.log(stdout);
+          console.error(stderr);
+        }
+
+        if (error) {
+          reject(error);
+        }
+
+        resolve(true);
+      });
+    });
+  }
+
+  async runChecker() {
+    try {
+      return this.checker
+        ? await this.checker({
+            definition: this,
+            bash: this.executeBashScript,
+          })
+        : true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   async evaluate(definition = this) {
     DefinitionDictionary.set(definition.name, definition);
 
@@ -44,11 +76,9 @@ export class Definition {
     }
 
     if (!definition.isGroup) {
-      definition.status = definition.checker
-        ? (await definition.checker({ definition }))
-          ? DefinitionStatus.SUCCESS
-          : DefinitionStatus.FAILED
-        : DefinitionStatus.SUCCESS;
+      definition.status = (await definition.runChecker())
+        ? DefinitionStatus.SUCCESS
+        : DefinitionStatus.FAILED;
     } else {
       const statuses = definition.definitions.map((def) => def.status);
       const allFailed = statuses.every((s) => s === DefinitionStatus.FAILED);
