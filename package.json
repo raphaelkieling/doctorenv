@@ -15,6 +15,9 @@
     "dev": "tsx --watch ./src/index.js",
     "publish": "npm run build && np"
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "keywords": [
     "cli",
     "tool",
