@@ -4,9 +4,15 @@
 
 # Doctorenv
 
-> 100% WIP, please do not use it yet
-
 Doctorenv is a checklist tool that helps developers identify environment issues and provides suggestions on how to fix them. 🐛
+
+### How to install?
+
+```sh
+npm i -g doctorenv
+
+yarn global add doctorenv
+```
 
 ### Why?
 
@@ -39,11 +45,11 @@ export default [
 Run:
 
 ```sh
-# To check
+# To check the default doctorenv.config.js
 doctorenv check
 
-# To fix (if fixable)
-doctorenv fix
+# To check with a custom config
+doctorenv check <custom-path-to-config>
 ```
 
 ### Programmatic usage:
