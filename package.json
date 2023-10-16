@@ -7,7 +7,7 @@
     "doctorenv": "./bin"
   },
   "scripts": {
-    "test": "vitest",
+    "test": "vitest --run",
     "coverage": "vitest run --coverage",
     "start": "tsx ./src/index.js",
     "build": "tsx ./build.js",
