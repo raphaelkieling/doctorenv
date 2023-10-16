@@ -3,6 +3,7 @@ import path from "node:path";
 import yargs from "yargs";
 
 yargs(process.argv.slice(2))
+  .scriptName("doctorenv")
   .command(
     "check",
     "Check the file",

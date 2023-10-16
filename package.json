@@ -1,19 +1,28 @@
 {
-  "name": "doctorenv",
-  "version": "0.0.1",
+  "name": "doctorenv-cli",
+  "version": "0.0.2",
   "description": "Helps you to make easy to onboard new developers to your project.",
-  "main": "index.js",
+  "main": "src/index.js",
+  "bin": {
+    "doctorenv": "bin/exec.sh"
+  },
   "type": "module",
   "scripts": {
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "start": "node ./src/index.js",
     "dev:example": "npm run dev check example.config.js",
-    "dev": "node --watch ./src/index.js"
+    "dev": "node --watch ./src/index.js",
+    "publish": "npm publish --access public"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "cli",
+    "tool",
+    "checker",
+    "doctor"
+  ],
+  "author": "raphael kieling <raphaelkieling98@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@vitest/coverage-v8": "^0.34.6",
     "vitest": "^0.34.6"
