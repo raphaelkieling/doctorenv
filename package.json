@@ -1,0 +1,26 @@
+{
+  "name": "doctorenv",
+  "version": "0.0.1",
+  "description": "Helps you to make easy to onboard new developers to your project.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "start": "node ./src/index.js",
+    "dev:example": "npm run dev check example.config.js",
+    "dev": "node --watch ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^0.34.6"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "isolated-vm": "^4.6.0",
+    "vm2": "^3.9.19",
+    "yargs": "^17.7.2"
+  }
+}
