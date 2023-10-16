@@ -1,4 +1,4 @@
-export default [
+module.exports = [
   {
     name: "Check npm",
     checker: ({ bash }) => bash("npm --version"),

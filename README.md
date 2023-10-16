@@ -9,9 +9,9 @@ Doctorenv is a checklist tool that helps developers identify environment issues 
 ### How to install?
 
 ```sh
-npm i -g doctorenv
+npm i -g doctorenv-cli
 
-yarn global add doctorenv
+yarn global add doctorenv-cli
 ```
 
 ### Why?
@@ -27,7 +27,7 @@ Example of config:
 
 ```js
 // doctorenv.config.js
-export default [
+module.exports = [
   {
     name: "Has all the environment variables",
     definitions: [

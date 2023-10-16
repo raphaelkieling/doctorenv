@@ -1,4 +1,4 @@
-export default [
+module.exports = [
   {
     name: "NPM or YARN",
     suggestions: ["install yarn or npm"],
