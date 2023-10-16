@@ -75,11 +75,8 @@ Would be a pleasure to have you contributing to this project. Feel free to open 
 
 ### Publishing
 
-Based on: https://docs.npmjs.com/cli/v8/commands/npm-version
-
 ```sh
-npm version patch
-npm publish
+npm run publish
 ```
 
 <small>
