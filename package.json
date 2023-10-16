@@ -1,6 +1,6 @@
 {
   "name": "doctorenv-cli",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Helps you to make easy to onboard new developers to your project.",
   "main": "src/index.js",
   "bin": {
@@ -12,8 +12,7 @@
     "coverage": "vitest run --coverage",
     "start": "node ./src/index.js",
     "dev:example": "npm run dev check example.config.js",
-    "dev": "node --watch ./src/index.js",
-    "publish": "npm publish --access public"
+    "dev": "node --watch ./src/index.js"
   },
   "keywords": [
     "cli",
