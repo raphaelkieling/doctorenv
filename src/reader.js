@@ -1,53 +1,59 @@
-import { Definition, DefinitionStatus } from './definition.js'
-import chalkT from 'chalk-template'
+import { ListrEnquirerPromptAdapter } from '@listr2/prompt-adapter-enquirer'
+import { Listr } from 'listr2'
+import { $ } from 'execa'
+import { Builder } from './builder'
 
-export async function readFile(filePath) {
-  const { default: data } = await import(filePath)
-  const definitions = await evaluateFromData(data)
-  printDefinitions(definitions)
-}
-
-export async function evaluateFromData(data) {
-  const definitions = data.map((d) => new Definition(d))
-
-  for await (const d of definitions) {
-    await d.evaluate()
+function buildContext(ctx, task) {
+  ctx.task = task
+  ctx.bash = $
+  ctx.prompt = task.prompt(ListrEnquirerPromptAdapter).run.bind(task)
+  ctx.delay = (ms) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms)
+    })
+  }
+  ctx.checkEnv = (envName) => {
+    if (!process.env[envName]) {
+      throw new Error(`env ${envName} is not set`)
+    }
   }
 
-  return definitions
+  return ctx
 }
 
-export function printDefinitions(definitions, depth = 0) {
-  definitions.forEach((d) => {
-    print(d, depth)
-
-    if (d.definitions.length === 0) return
-
-    d.definitions.forEach((definition) => {
-      print(definition, depth + 1)
-    })
-  })
-}
-
-function print(definition, depth) {
-  const tab = '\t'.repeat(depth)
-  if (!definition.isGroup) {
-    if (definition.status === DefinitionStatus.SUCCESS) {
-      // The definition is finalized
-      console.log(chalkT`${tab} {gray • ${definition.name}} `)
-    } else {
-      // The definition is wrong
-      console.log(chalkT`${tab} {red.bold ✗ ${definition.name}}`)
-
-      if (definition.suggestions?.length > 0) {
-        definition.suggestions.forEach((s) => {
-          console.log(chalkT`${tab}   {blue \u2197\uFE0F ${s}}`)
+function mapper(def) {
+  return {
+    title: def.title,
+    task: async (ctx, task) => {
+      if (def.tasks?.length > 0) {
+        return task.newListr(def.tasks.map(mapper), {
+          concurrent: false,
+          rendererOptions: { collapseSubtasks: true },
         })
       }
-    }
-  } else {
-    const groupped = definition.isGroup ? '❯' : ''
-    const color = definition.hasSucceed ? 'gray' : 'red'
-    console.log(chalkT`{${color} ${groupped} ${tab}${definition.name}}`)
+
+      await def.task(buildContext(ctx, task))
+    },
   }
+}
+
+export async function startFile(filePath) {
+  const { default: fn } = await import(filePath)
+
+  const data = fn({ builder: new Builder() })
+
+  if (!data) {
+    throw new Error('No data returned from config file')
+  }
+
+  const options = Array.isArray(data) ? {} : data?.options
+  const definitions = Array.isArray(data) ? data : data.tasks
+  const tasksFromDefinitions = definitions.map(mapper)
+
+  const tasks = new Listr(tasksFromDefinitions, {
+    concurrent: options?.concurrent ?? false,
+    exitOnError: false,
+  })
+
+  await tasks.run()
 }

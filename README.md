@@ -32,17 +32,24 @@ Example of config:
 
 ```js
 // doctorenv.config.js
-module.exports = [
+
+// Using Builder
+module.exports = ({ builder }) => {
+  return builder
+    .task('has npm', ({ bash }) => bash`npm --version`)
+    .task('has yarn', ({ bash }) => bash`yarn --version`)
+    .build()
+}
+
+// Raw
+module.exports = () => [
   {
-    name: 'Has all the environment variables',
-    definitions: [
-      {
-        name: 'MY_ENV',
-        suggestions: ['execute in the root: source ./.env.local'],
-        // if the checker is false, shows all the suggestion
-        checker: () => process.env.MY_ENV,
-      },
-    ],
+    name: 'has npm',
+    task: ({ bash }) => bash`npm --version`,
+  },
+  {
+    name: 'has yarn',
+    task: ({ bash }) => bash`yarn --version`,
   },
 ]
 ```
@@ -57,18 +64,6 @@ doctorenv check
 doctorenv check <custom-path-to-config>
 ```
 
-### Programmatic usage:
-
-```js
-import { Builder } from 'doctorenv'
-
-new Builder()
-  .createDefinition('Definition 1')
-  .addChecker('has yarn', ({ bash }) => bash('npm --version'))
-  .addChecker('has npm', () => true)
-  .start()
-```
-
 ### How to contribute?
 
 Would be a pleasure to have you contributing to this project. Feel free to open a PR with your changes.
@@ -77,6 +72,17 @@ Would be a pleasure to have you contributing to this project. Feel free to open 
 - Create a branch
 - Make your changes
 - Open a PR
+
+### Dev
+
+```sh
+# testing
+npm run test
+npm run test:watch
+
+# run a specific example in dev mode
+npm run dev check examples/NAME_HERE.config.js
+```
 
 ### Publishing
 

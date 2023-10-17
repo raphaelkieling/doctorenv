@@ -1,5 +1,5 @@
 import { cosmiconfigSync } from 'cosmiconfig'
-import { readFile } from './reader.js'
+import { startFile } from './reader.js'
 import path from 'node:path'
 import fs from 'node:fs'
 import yargs from 'yargs'
@@ -37,7 +37,7 @@ yargs(process.argv.slice(2))
     () => {},
     async (argv) => {
       const fileName = argv._[1]
-      await readFile(resolveName(fileName))
+      await startFile(resolveName(fileName))
     }
   )
   .command(
@@ -47,7 +47,7 @@ yargs(process.argv.slice(2))
     async () => {
       fs.writeFileSync(
         path.resolve(process.cwd(), 'doctorenv.config.js'),
-        `module.exports = []`
+        `module.exports = ({ builder }) => { return [] }`
       )
     }
   )

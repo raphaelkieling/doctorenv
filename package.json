@@ -14,7 +14,6 @@
   "scripts": {
     "start": "tsx ./src/index.js",
     "dev": "tsx --watch ./src/index.js",
-    "dev:example": "npm run dev check example.config.js",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -33,10 +32,12 @@
   "author": "raphael kieling <https://github.com/raphaelkieling>",
   "license": "MIT",
   "devDependencies": {
+    "@listr2/prompt-adapter-enquirer": "^1.0.1",
     "@vitest/coverage-v8": "^0.34.6",
     "chalk": "^5.3.0",
     "chalk-template": "^1.1.0",
     "cosmiconfig": "^8.3.6",
+    "enquirer": "^2.4.1",
     "esbuild": "^0.19.4",
     "execa": "^8.0.1",
     "listr2": "^7.0.1",
