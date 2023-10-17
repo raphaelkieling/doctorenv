@@ -2,23 +2,27 @@ import { ListrEnquirerPromptAdapter } from '@listr2/prompt-adapter-enquirer'
 import { Listr } from 'listr2'
 import { $ } from 'execa'
 import { Builder } from './builder'
+import { arrayOfTasksSchema } from './validator'
 
 function buildContext(ctx, task) {
-  ctx.task = task
-  ctx.bash = $
-  ctx.prompt = task.prompt(ListrEnquirerPromptAdapter).run.bind(task)
-  ctx.delay = (ms) => {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms)
-    })
-  }
-  ctx.checkEnv = (envName) => {
-    if (!process.env[envName]) {
-      throw new Error(`env ${envName} is not set`)
-    }
+  const newCtx = {
+    ...ctx,
+    task,
+    bash: $,
+    prompt: task.prompt(ListrEnquirerPromptAdapter).run.bind(task),
+    delay: (ms) => {
+      return new Promise((resolve) => {
+        setTimeout(resolve, ms)
+      })
+    },
+    checkEnv: (envName) => {
+      if (!process.env[envName]) {
+        throw new Error(`env ${envName} is not set`)
+      }
+    },
   }
 
-  return ctx
+  return newCtx
 }
 
 function mapper(def) {
@@ -48,12 +52,19 @@ export async function startFile(filePath) {
 
   const options = Array.isArray(data) ? {} : data?.options
   const definitions = Array.isArray(data) ? data : data.tasks
-  const tasksFromDefinitions = definitions.map(mapper)
 
+  const { error } = arrayOfTasksSchema.validate(definitions, {
+    abortEarly: false,
+  })
+  if (error) throw error
+
+  const tasksFromDefinitions = definitions.map(mapper)
   const tasks = new Listr(tasksFromDefinitions, {
     concurrent: options?.concurrent ?? false,
     exitOnError: false,
   })
 
   await tasks.run()
+
+  return true
 }
