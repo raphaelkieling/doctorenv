@@ -3,28 +3,29 @@ import chalk from 'chalk'
 
 export async function readFile(filePath) {
   const { default: data } = await import(filePath)
-  await readFromData(data)
+  const definitions = await evaluateFromData(data)
+  printDefinitions(definitions)
 }
 
-export async function readFromData(data) {
+export async function evaluateFromData(data) {
   const definitions = data.map((d) => new Definition(d))
 
   for await (const d of definitions) {
     await d.evaluate()
   }
 
-  for await (const d of definitions) {
-    printDefinitions(d)
-  }
+  return definitions
 }
 
-function printDefinitions(definition, depth = 0) {
-  print(definition, depth)
+export function printDefinitions(definitions, depth = 0) {
+  definitions.forEach((d) => {
+    print(d, depth)
 
-  if (definition.definitions.length === 0) return
+    if (d.definitions.length === 0) return
 
-  definition.definitions.forEach((definition) => {
-    print(definition, depth + 1)
+    d.definitions.forEach((definition) => {
+      print(definition, depth + 1)
+    })
   })
 }
 
@@ -37,7 +38,7 @@ function print(definition, depth) {
     } else {
       console.log(`${tab}${chalk.red.bold(`✗ ${definition.name}`)}`)
 
-      if (definition.suggestions.length > 0) {
+      if (definition.suggestions?.length > 0) {
         definition.suggestions.forEach((s) => {
           console.log(`${tab}  ${chalk.blue(`\u2197\uFE0F ${s}`)}`)
         })

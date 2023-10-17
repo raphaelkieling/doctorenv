@@ -1,3 +1,5 @@
+import { buildContext } from './context'
+
 export const DefinitionDictionary = new Map()
 
 export const DefinitionStatus = {
@@ -21,10 +23,7 @@ export class Definition {
     this.status = DefinitionStatus.PENDING
     this.suggestions = suggestions ?? []
     this.isGroup = definitions?.length > 0
-    this.definitions = []
-
-    if (this.isGroup)
-      this.definitions = definitions.map((d) => new Definition(d))
+    this.definitions = definitions?.map((d) => new Definition(d)) ?? []
   }
 
   get hasSucceed() {
@@ -35,44 +34,24 @@ export class Definition {
     this.suggestions.push(suggestion)
   }
 
-  async executeBashScript(payload, options = {}) {
-    return new Promise(async (resolve, reject) => {
-      const { exec } = await import('child_process')
-
-      exec(payload, (error, stdout, stderr) => {
-        if (options?.debug) {
-          console.log(stdout)
-          console.error(stderr)
-        }
-
-        if (error) {
-          reject(error)
-        }
-
-        resolve(true)
-      })
-    })
-  }
-
   async runChecker() {
     try {
-      return this.checker
-        ? await this.checker({
-            definition: this,
-            bash: this.executeBashScript,
-          })
-        : true
+      const ctx = buildContext({ definition: this })
+      return this.checker ? await this.checker(ctx) : true
     } catch (e) {
       return false
     }
   }
 
   async evaluate(definition = this) {
+    definition.isGroup = definition?.definitions?.length > 0
+
     DefinitionDictionary.set(definition.name, definition)
 
     for (const def of definition.definitions) {
-      DefinitionDictionary.set(definition.name, definition)
       await definition.evaluate(def)
+
+      DefinitionDictionary.set(definition.name, definition)
     }
 
     if (!definition.isGroup) {
