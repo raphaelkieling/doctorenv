@@ -7,7 +7,9 @@
     "doctorenv": "./bin"
   },
   "files": [
-    "bin"
+    "bin",
+    "README.md",
+    "package.json"
   ],
   "scripts": {
     "start": "tsx ./src/index.js",
@@ -16,7 +18,7 @@
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "build": "swc ./src -d ./bin",
+    "build": "tsx build.js",
     "publish": "npm run build && np"
   },
   "engines": {
