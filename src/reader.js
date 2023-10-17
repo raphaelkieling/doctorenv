@@ -1,5 +1,5 @@
 import { Definition, DefinitionStatus } from './definition.js'
-import chalk from 'chalk'
+import chalkT from 'chalk-template'
 
 export async function readFile(filePath) {
   const { default: data } = await import(filePath)
@@ -34,19 +34,20 @@ function print(definition, depth) {
   if (!definition.isGroup) {
     if (definition.status === DefinitionStatus.SUCCESS) {
       // The definition is finalized
-      console.log(`${tab}${chalk.gray(`• ${definition.name}`)}`)
+      console.log(chalkT`${tab} {gray • ${definition.name}} `)
     } else {
-      console.log(`${tab}${chalk.red.bold(`✗ ${definition.name}`)}`)
+      // The definition is wrong
+      console.log(chalkT`${tab} {red.bold ✗ ${definition.name}}`)
 
       if (definition.suggestions?.length > 0) {
         definition.suggestions.forEach((s) => {
-          console.log(`${tab}  ${chalk.blue(`\u2197\uFE0F ${s}`)}`)
+          console.log(chalkT`${tab}   {blue \u2197\uFE0F ${s}}`)
         })
       }
     }
   } else {
     const groupped = definition.isGroup ? '❯' : ''
     const color = definition.hasSucceed ? 'gray' : 'red'
-    console.log(chalk[color](`${groupped} ${tab}${definition.name}`))
+    console.log(chalkT`{${color} ${groupped} ${tab}${definition.name}}`)
   }
 }

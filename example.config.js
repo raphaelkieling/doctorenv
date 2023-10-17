@@ -3,8 +3,8 @@ module.exports = [
     name: 'NPM or YARN',
     suggestions: ['install yarn or npm'],
     checker: async ({ bash }) => {
-      await bash('npm --version')
-      await bash('yarn --version')
+      await bash`npm --version`
+      await bash`yarn --version`
 
       return true
     },
@@ -25,9 +25,13 @@ module.exports = [
       {
         name: 'has docker',
         suggestions: ['visit: https://www.docker.com'],
-        checker: ({ definition }) => {
-          definition.pushSuggestion('Install docker friend')
-          return false
+        checker: async ({ definition, bash }) => {
+          definition.setSuggestion('Try another command')
+          await bash`docker --version`
+
+          definition.setSuggestion('Try with docker instead of dockerx')
+          await bash`dockerx --version`
+          return true
         },
       },
       {
@@ -43,7 +47,7 @@ module.exports = [
       {
         name: 'has A',
         suggestions: ['Run the .source'],
-        checker: () => !!process.env.A,
+        checker: () => true,
       },
       {
         name: 'has B',

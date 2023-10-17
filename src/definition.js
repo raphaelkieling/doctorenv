@@ -34,6 +34,10 @@ export class Definition {
     this.suggestions.push(suggestion)
   }
 
+  setSuggestion(suggestion) {
+    this.suggestions = [suggestion]
+  }
+
   async runChecker() {
     try {
       const ctx = buildContext({ definition: this })

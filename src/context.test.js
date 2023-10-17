@@ -13,11 +13,13 @@ describe('buildContext', () => {
   })
 
   it('should execute a bash script and resolve with true', async () => {
-    const result = await context.bash('echo "Hello, World!"')
-    expect(result).toBe(true)
+    const { failed } = await context.bash({
+      stdin: 'inherit',
+    })`echo "Hello, World!`
+    expect(failed).toBe(false)
   })
 
   it('should reject with an error if the script fails', async () => {
-    await expect(context.bash('exit 1')).rejects.toThrow()
+    await expect(context.bash`exit 1`).rejects.toThrow()
   })
 })

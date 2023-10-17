@@ -40,5 +40,16 @@ yargs(process.argv.slice(2))
       await readFile(resolveName(fileName))
     }
   )
+  .command(
+    'init',
+    'Create a default config file',
+    () => {},
+    async () => {
+      fs.writeFileSync(
+        path.resolve(process.cwd(), 'doctorenv.config.js'),
+        `module.exports = []`
+      )
+    }
+  )
   .demandCommand(1)
   .parse()
