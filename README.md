@@ -9,9 +9,14 @@ Doctorenv is a checklist tool that helps developers identify environment issues 
 ### How to install?
 
 ```sh
+# Installing globally using npn
 npm i -g doctorenv-cli
 
+# Installing globally using yarn
 yarn global add doctorenv-cli
+
+# Without install
+npx doctorenv-cli
 ```
 
 ### Why?
@@ -29,17 +34,17 @@ Example of config:
 // doctorenv.config.js
 module.exports = [
   {
-    name: "Has all the environment variables",
+    name: 'Has all the environment variables',
     definitions: [
       {
-        name: "MY_ENV",
-        suggestions: ["execute in the root: source ./.env.local"],
+        name: 'MY_ENV',
+        suggestions: ['execute in the root: source ./.env.local'],
         // if the checker is false, shows all the suggestion
         checker: () => process.env.MY_ENV,
       },
     ],
   },
-];
+]
 ```
 
 Run:
@@ -55,13 +60,13 @@ doctorenv check <custom-path-to-config>
 ### Programmatic usage:
 
 ```js
-import { Builder } from "doctorenv";
+import { Builder } from 'doctorenv'
 
 new Builder()
-  .createDefinition("Definition 1")
-  .addChecker("has yarn", ({ bash }) => bash("npm --version"))
-  .addChecker("has npm", () => true)
-  .start();
+  .createDefinition('Definition 1')
+  .addChecker('has yarn', ({ bash }) => bash('npm --version'))
+  .addChecker('has npm', () => true)
+  .start()
 ```
 
 ### How to contribute?
