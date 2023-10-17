@@ -1,6 +1,6 @@
 {
   "name": "doctorenv-cli",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Helps you to make easy to onboard new developers to your project.",
   "main": "src/index.js",
   "bin": {
