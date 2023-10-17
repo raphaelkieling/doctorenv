@@ -6,6 +6,9 @@
   "bin": {
     "doctorenv": "./bin"
   },
+  "files": [
+    "bin"
+  ],
   "scripts": {
     "start": "tsx ./src/index.js",
     "dev": "tsx --watch ./src/index.js",
