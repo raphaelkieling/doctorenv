@@ -32,26 +32,14 @@ Example of config:
 
 ```js
 // doctorenv.config.js
-
-// Using Builder
 module.exports = ({ builder }) => {
   return builder
-    .task('has npm', ({ bash }) => bash`npm --version`)
-    .task('has yarn', ({ bash }) => bash`yarn --version`)
+    .task('check package manager')
+    .subTask('has npm', ({ bash }) => bash`npm --version`)
+    .subTask('has yarn', ({ bash }) => bash`yarn --version`)
+    .task('has env', ({ checkEnv }) => checkEnv('NODE_ENV'))
     .build()
 }
-
-// Raw
-module.exports = () => [
-  {
-    name: 'has npm',
-    task: ({ bash }) => bash`npm --version`,
-  },
-  {
-    name: 'has yarn',
-    task: ({ bash }) => bash`yarn --version`,
-  },
-]
 ```
 
 Run:

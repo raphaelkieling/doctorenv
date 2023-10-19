@@ -29,14 +29,19 @@ function mapper(def) {
   return {
     title: def.title,
     task: async (ctx, task) => {
-      if (def.tasks?.length > 0) {
-        return task.newListr(def.tasks.map(mapper), {
-          concurrent: false,
-          rendererOptions: { collapseSubtasks: true },
-        })
-      }
+      try {
+        if (def.tasks?.length > 0) {
+          return task.newListr(def.tasks.map(mapper), {
+            concurrent: false,
+            rendererOptions: { collapseSubtasks: true },
+          })
+        }
 
-      await def.task(buildContext(ctx, task))
+        await def.task(buildContext(ctx, task))
+      } catch (err) {
+        if (def.suggestion) throw Error(`${def.title} - (${def.suggestion})`)
+        throw err
+      }
     },
   }
 }

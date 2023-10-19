@@ -9,6 +9,7 @@ module.exports = ({ builder }) => {
     .subTask('child 2', ({ delay }) => delay(3000))
     .subTask('child 3', ({ task }) => task.skip('just the child 3'))
     .subTask('child 4', ({ checkEnv }) => checkEnv('XX'))
+    .setSuggestion('Run source ./env.sh')
     .task('delayed for 2s', async ({ delay }) => delay(2000))
     .setConcurrent()
     .build()

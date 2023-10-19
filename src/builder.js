@@ -1,6 +1,7 @@
 export class Builder {
   constructor() {
     this._currentTask = null
+    this._currentSubTask = null
     this._tasks = []
     this._options = {}
   }
@@ -21,8 +22,15 @@ export class Builder {
     return this
   }
 
+  setSuggestion(suggestion) {
+    ;(this._currentSubTask ?? this._currentTask).suggestion = suggestion
+    return this
+  }
+
   subTask(title, task) {
-    this._currentTask?.tasks.push({ title, task })
+    const definition = { title, task }
+    this._currentSubTask = definition
+    this._currentTask?.tasks.push(definition)
     return this
   }
 
