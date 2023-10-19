@@ -27,6 +27,11 @@ export class Builder {
     return this
   }
 
+  setFixableSuggestion(title, task) {
+    ;(this._currentSubTask ?? this._currentTask).fix = { title, task }
+    return this
+  }
+
   subTask(title, task) {
     const definition = { title, task }
     this._currentSubTask = definition

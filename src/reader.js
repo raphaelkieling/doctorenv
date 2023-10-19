@@ -1,15 +1,14 @@
-import { ListrEnquirerPromptAdapter } from '@listr2/prompt-adapter-enquirer'
 import { Listr } from 'listr2'
 import { $ } from 'execa'
 import { Builder } from './builder'
 import { arrayOfTasksSchema } from './validator'
+import { confirm } from '@inquirer/prompts'
 
 function buildContext(ctx, task) {
   const newCtx = {
     ...ctx,
     task,
     bash: $,
-    prompt: task.prompt(ListrEnquirerPromptAdapter).run.bind(task),
     delay: (ms) => {
       return new Promise((resolve) => {
         setTimeout(resolve, ms)
@@ -28,6 +27,8 @@ function buildContext(ctx, task) {
 function mapper(def) {
   return {
     title: def.title,
+    // Necessary to create to access the fixers in the task.errors
+    metadata: def,
     task: async (ctx, task) => {
       try {
         if (def.tasks?.length > 0) {
@@ -49,6 +50,7 @@ function mapper(def) {
 export async function startFile(filePath) {
   const { default: fn } = await import(filePath)
 
+  // Build the tasks
   const data = fn({ builder: new Builder() })
 
   if (!data) {
@@ -58,18 +60,45 @@ export async function startFile(filePath) {
   const options = Array.isArray(data) ? {} : data?.options
   const definitions = Array.isArray(data) ? data : data.tasks
 
+  // Validate the custom tasks and schemas
   const { error } = arrayOfTasksSchema.validate(definitions, {
     abortEarly: false,
   })
   if (error) throw error
 
+  // Map for the Listr
   const tasksFromDefinitions = definitions.map(mapper)
   const tasks = new Listr(tasksFromDefinitions, {
     concurrent: options?.concurrent ?? false,
+    collectErrors: 'minimal',
     exitOnError: false,
   })
 
+  // Run it
   await tasks.run()
+
+  // Fix the fixable tasks if the user wants to
+  let runFix = false
+  for (const err of tasks.errors) {
+    const task = err.task.task
+    const fixTask = task.metadata.fix
+    if (fixTask) {
+      console.log(`\n(${task.title}) is fixable:`)
+
+      const answer = await confirm({ message: fixTask.title })
+      if (answer) {
+        if (!runFix) runFix = true
+        await task.metadata.fix.task(buildContext({}, task))
+      }
+    }
+  }
+
+  if (runFix) {
+    const answer = await confirm({
+      message: 'Do you want to run the config again?',
+    })
+    if (answer) await tasks.run()
+  }
 
   return true
 }

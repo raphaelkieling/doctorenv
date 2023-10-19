@@ -32,6 +32,7 @@
   "author": "raphael kieling <https://github.com/raphaelkieling>",
   "license": "MIT",
   "devDependencies": {
+    "@inquirer/prompts": "^3.2.0",
     "@listr2/prompt-adapter-enquirer": "^1.0.1",
     "@vitest/coverage-v8": "^0.34.6",
     "chalk": "^5.3.0",
