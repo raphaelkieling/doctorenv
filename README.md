@@ -5,6 +5,7 @@
 # Doctorenv
 
 ![Known Vulnerabilities](https://snyk.io/test/github/raphaelkieling/doctorenv/badge.svg)
+[![codecov](https://codecov.io/gh/raphaelkieling/doctorenv/graph/badge.svg?token=8FUTQY7PA7)](https://codecov.io/gh/raphaelkieling/doctorenv)
 
 Doctorenv is a checklist tool that helps developers identify environment issues and provides suggestions on how to fix them. 🐛
 
