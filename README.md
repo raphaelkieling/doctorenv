@@ -61,6 +61,10 @@ doctorenv check <custom-path-to-config>
 
 ![Alt text](image-1.png)
 
+### Changelog
+
+You can check the changelog [here](CHANGELOG.md).
+
 ### How to contribute?
 
 It's simple, just take a look at our [Contributing](CONTRIBUTING.md) guide.
