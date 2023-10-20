@@ -85,4 +85,34 @@ describe('Builder', () => {
       expect(options.concurrent).toBe(false)
     })
   })
+
+  describe('setFixableSuggestion', () => {
+    it('should sets the fixable suggestion on the subtask', () => {
+      builder
+        .task('Task 1', () => {})
+        .subTask('Subtask 1', () => {})
+        .setFixableSuggestion('testing', () => true)
+
+      const { tasks } = builder.build()
+
+      expect(tasks).toHaveLength(1)
+      expect(tasks[0].tasks).toHaveLength(1)
+      expect(tasks[0].title).toBe('Task 1')
+      expect(tasks[0].fix).not.toBeDefined()
+      expect(tasks[0].tasks[0].title).toBe('Subtask 1')
+      expect(tasks[0].tasks[0].fix).toBeDefined()
+    })
+
+    it('should sets the fixable suggestion on the root task', () => {
+      builder
+        .task('Task 1', () => {})
+        .setFixableSuggestion('testing', () => true)
+
+      const { tasks } = builder.build()
+
+      expect(tasks).toHaveLength(1)
+      expect(tasks[0].title).toBe('Task 1')
+      expect(tasks[0].fix).toBeDefined()
+    })
+  })
 })

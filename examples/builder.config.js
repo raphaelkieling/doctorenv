@@ -5,6 +5,7 @@ module.exports = ({ builder }) => {
     .task('has env', ({ checkEnv }) => checkEnv('TERM'))
     .task('skipped task', ({ task }) => task.skip('i want to skip this task'))
     .task('main task')
+    .setFixableSuggestion('Run source ./env1.sh', ({ bash }) => bash`cat ./bin`)
     .subTask('child 1', ({ task }) => task.skip('just the child 1'))
     .subTask('child 2', ({ delay }) => delay(3000))
     .subTask('child 3', ({ task }) => task.skip('just the child 3'))
