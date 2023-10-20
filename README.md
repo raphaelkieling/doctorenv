@@ -63,14 +63,9 @@ doctorenv check <custom-path-to-config>
 
 ### How to contribute?
 
-Would be a pleasure to have you contributing to this project. Feel free to open a PR with your changes.
+It's simple, just take a look at our [Contributing](CONTRIBUTING.md) guide.
 
-- Fork the project
-- Create a branch
-- Make your changes
-- Open a PR
-
-### Dev
+### Development
 
 ```sh
 # testing
