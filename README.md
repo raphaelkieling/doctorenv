@@ -4,6 +4,8 @@
 
 # Doctorenv
 
+![Known Vulnerabilities](https://snyk.io/test/github/raphaelkieling/doctorenv/badge.svg)
+
 Doctorenv is a checklist tool that helps developers identify environment issues and provides suggestions on how to fix them. 🐛
 
 ### How to install?
@@ -38,6 +40,10 @@ module.exports = ({ builder }) => {
     .subTask('has npm', ({ bash }) => bash`npm --version`)
     .subTask('has yarn', ({ bash }) => bash`yarn --version`)
     .task('has env', ({ checkEnv }) => checkEnv('NODE_ENV'))
+    .setFixableSuggestion(
+      'Run source ./env.sh',
+      ({ bash }) => bash`source ./env.sh`
+    )
     .build()
 }
 ```

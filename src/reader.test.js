@@ -3,6 +3,7 @@ import { startFile } from './reader'
 import path from 'node:path'
 
 vi.mock('listr2')
+vi.mock('node-banner')
 
 describe('startFile', () => {
   it('should throw an error if no data is returned from the config file', async () => {

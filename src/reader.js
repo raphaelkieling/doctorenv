@@ -3,6 +3,7 @@ import { $ } from 'execa'
 import { Builder } from './builder'
 import { arrayOfTasksSchema } from './validator'
 import { confirm } from '@inquirer/prompts'
+import showBanner from 'node-banner'
 
 function buildContext(ctx, task) {
   const newCtx = {
@@ -41,6 +42,7 @@ function mapper(def) {
         await def.task(buildContext(ctx, task))
       } catch (err) {
         if (def.suggestion) throw Error(`${def.title} - (${def.suggestion})`)
+        if (def.fix?.title) throw Error(`${def.title} - (fixable)`)
         throw err
       }
     },
@@ -56,6 +58,13 @@ export async function startFile(filePath) {
   if (!data) {
     throw new Error('No data returned from config file')
   }
+
+  // Print the banner
+  await showBanner(
+    'Doctorenv',
+    'Your friend to check your environment\n',
+    'blue'
+  )
 
   const options = Array.isArray(data) ? {} : data?.options
   const definitions = Array.isArray(data) ? data : data.tasks
@@ -79,11 +88,12 @@ export async function startFile(filePath) {
 
   // Fix the fixable tasks if the user wants to
   let runFix = false
-  for (const err of tasks.errors) {
+  for (const err of tasks.errors ?? []) {
     const task = err.task.task
     const fixTask = task.metadata.fix
     if (fixTask) {
-      console.log(`\n(${task.title}) is fixable:`)
+      console.log('-'.repeat(20))
+      console.log(`(${task.title}) is fixable:`)
 
       const answer = await confirm({ message: fixTask.title })
       if (answer) {
@@ -91,13 +101,6 @@ export async function startFile(filePath) {
         await task.metadata.fix.task(buildContext({}, task))
       }
     }
-  }
-
-  if (runFix) {
-    const answer = await confirm({
-      message: 'Do you want to run the config again?',
-    })
-    if (answer) await tasks.run()
   }
 
   return true

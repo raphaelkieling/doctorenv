@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { Builder } from './builder'
-import { arrayOfTasksSchema, taskSchema } from './validator'
+import { arrayOfTasksSchema } from './validator'
 
 describe('Builder', () => {
   let builder
