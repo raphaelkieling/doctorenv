@@ -59,6 +59,8 @@ doctorenv check
 doctorenv check <custom-path-to-config>
 ```
 
+![Alt text](image-1.png)
+
 ### How to contribute?
 
 Would be a pleasure to have you contributing to this project. Feel free to open a PR with your changes.

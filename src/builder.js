@@ -18,6 +18,7 @@ export class Builder {
   task(title, task) {
     const definition = { title, task, tasks: [] }
     this._tasks.push(definition)
+    this._currentSubTask = null
     this._currentTask = definition
     return this
   }

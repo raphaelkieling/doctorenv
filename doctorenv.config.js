@@ -1,10 +1,10 @@
-module.exports = [
+module.exports = () => [
   {
-    name: 'Check npm',
-    checker: ({ bash }) => bash('npm --version'),
+    title: 'Check npm',
+    task: ({ bash }) => bash('npm --version'),
   },
   {
-    name: 'Check github write access',
-    checker: ({ bash }) => bash('git push -u --dry-run'),
+    title: 'Check github write access',
+    task: ({ bash }) => bash('git push -u --dry-run'),
   },
 ]
