@@ -11,7 +11,6 @@ module.exports = () => {
       title: 'has docker',
       task: async ({ bash }) => {
         await bash`docker --version`
-        await bash`docker --version`
       },
     },
     {

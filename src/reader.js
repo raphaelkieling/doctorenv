@@ -50,10 +50,13 @@ function mapper(def) {
 }
 
 export async function startFile(filePath) {
-  const { default: fn } = await import(filePath)
+  const { default: imported } = await import(filePath)
 
   // Build the tasks
-  const data = fn({ builder: new Builder() })
+  const data =
+    typeof imported === 'function'
+      ? imported({ builder: new Builder() })
+      : imported
 
   if (!data) {
     throw new Error('No data returned from config file')

@@ -18,6 +18,11 @@ describe('startFile', () => {
     await expect(startFile(filePath)).resolves.toBeTruthy()
   })
 
+  it('should not throw an error for a raw array mode', async () => {
+    const filePath = path.resolve(__dirname, '../examples/rawarray.config.js')
+    await expect(startFile(filePath)).resolves.toBeTruthy()
+  })
+
   it('should not throw an error for a builder mode', async () => {
     const filePath = path.resolve(__dirname, '../examples/builder.config.js')
     await expect(startFile(filePath)).resolves.toBeTruthy()

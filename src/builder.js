@@ -6,10 +6,6 @@ export class Builder {
     this._options = {}
   }
 
-  get currentDefinition() {
-    return this._currentTask
-  }
-
   setConcurrent(active = true) {
     this._options.concurrent = active
     return this
