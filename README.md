@@ -80,6 +80,13 @@ It's simple, just take a look at our [Contributing](CONTRIBUTING.md) guide.
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dakshsinghrathore"><img src="https://avatars.githubusercontent.com/u/115932772?v=4?s=100" width="100px;" alt="Daksh Singh Rathore"/><br /><sub><b>Daksh Singh Rathore</b></sub></a><br /><a href="#research-dakshsinghrathore" title="Research">🔬</a> <a href="#doc-dakshsinghrathore" title="Documentation">📖</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
