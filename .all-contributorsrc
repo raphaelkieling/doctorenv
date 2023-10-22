@@ -1,4 +1,22 @@
 {
   "projectName": "doctorenv",
-  "projectOwner": "raphaelkieling"
+  "projectOwner": "raphaelkieling",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "dakshsinghrathore",
+      "name": "Daksh Singh Rathore",
+      "avatar_url": "https://avatars.githubusercontent.com/u/115932772?v=4",
+      "profile": "https://github.com/dakshsinghrathore",
+      "contributions": [
+        "research",
+        "doc"
+      ]
+    }
+  ]
 }
