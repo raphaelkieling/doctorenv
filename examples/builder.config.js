@@ -1,3 +1,7 @@
+/**
+ * @param {object} params - config params
+ * @param {import("../src/index").Builder} params.builder - the builder instance
+ */
 module.exports = ({ builder }) => {
   return builder
     .task('has npm', ({ bash }) => bash`npm --version`)

@@ -7,20 +7,26 @@
 ![Known Vulnerabilities](https://snyk.io/test/github/raphaelkieling/doctorenv/badge.svg)
 [![codecov](https://codecov.io/gh/raphaelkieling/doctorenv/graph/badge.svg?token=8FUTQY7PA7)](https://codecov.io/gh/raphaelkieling/doctorenv)
 
-Doctorenv is a checklist tool that helps developers identify environment issues and provides suggestions on how to fix them. 🐛
+[Wiki documentation here](https://github.com/raphaelkieling/doctorenv/wiki)
+
+✅ `Doctorenv` is a checklist tool that helps developers to check if they have everything to contribute in a project.
+
+In the end the goal is `Save time`, nothing more! 🚀
 
 ### How to install?
 
 ```sh
+# Without install
+npx doctorenv-cli
+
 # Installing globally using npn
 npm i -g doctorenv-cli
 
 # Installing globally using yarn
 yarn global add doctorenv-cli
-
-# Without install
-npx doctorenv-cli
 ```
+
+> I do not recommend to install locally yet, since you do not have any big reason to do it right now. In the future the idea is to have plugin system, hooks and type checking using `require`, up to you.
 
 ### Why?
 

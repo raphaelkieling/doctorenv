@@ -1,9 +1,9 @@
 import { Listr } from 'listr2'
 import { $ } from 'execa'
-import { Builder } from './builder'
 import { arrayOfTasksSchema } from './validator'
 import { confirm } from '@inquirer/prompts'
 import showBanner from 'node-banner'
+import { importConfigData } from './config'
 
 function buildContext(ctx, task) {
   const newCtx = {
@@ -25,7 +25,7 @@ function buildContext(ctx, task) {
   return newCtx
 }
 
-function mapper(def) {
+function mapToListr(def) {
   return {
     title: def.title,
     // Necessary to create to access the fixers in the task.errors
@@ -33,7 +33,7 @@ function mapper(def) {
     task: async (ctx, task) => {
       try {
         if (def.tasks?.length > 0) {
-          return task.newListr(def.tasks.map(mapper), {
+          return task.newListr(def.tasks.map(mapToListr), {
             concurrent: false,
             rendererOptions: { collapseSubtasks: true },
           })
@@ -50,17 +50,8 @@ function mapper(def) {
 }
 
 export async function startFile(filePath) {
-  const { default: imported } = await import(filePath)
-
-  // Build the tasks
-  const data =
-    typeof imported === 'function'
-      ? imported({ builder: new Builder() })
-      : imported
-
-  if (!data) {
-    throw new Error('No data returned from config file')
-  }
+  // Import and validate the config data
+  const data = await importConfigData(filePath)
 
   // Print the banner
   await showBanner(
@@ -79,7 +70,7 @@ export async function startFile(filePath) {
   if (error) throw error
 
   // Map for the Listr
-  const tasksFromDefinitions = definitions.map(mapper)
+  const tasksFromDefinitions = definitions.map(mapToListr)
   const tasks = new Listr(tasksFromDefinitions, {
     concurrent: options?.concurrent ?? false,
     collectErrors: 'minimal',
