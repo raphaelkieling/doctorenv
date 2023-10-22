@@ -6,6 +6,7 @@
 
 ![Known Vulnerabilities](https://snyk.io/test/github/raphaelkieling/doctorenv/badge.svg)
 [![codecov](https://codecov.io/gh/raphaelkieling/doctorenv/graph/badge.svg?token=8FUTQY7PA7)](https://codecov.io/gh/raphaelkieling/doctorenv)
+[![All Contributors](https://img.shields.io/github/all-contributors/raphaelkieling/doctorenv?color=ee8449&style=flat-square)](#contributors)
 
 [Wiki documentation here](https://github.com/raphaelkieling/doctorenv/wiki)
 
