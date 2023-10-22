@@ -75,6 +75,17 @@ You can check the changelog [here](CHANGELOG.md).
 
 It's simple, just take a look at our [Contributing](CONTRIBUTING.md) guide.
 
+### Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ### Development
 
 ```sh
