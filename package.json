@@ -19,7 +19,8 @@
     "test:coverage": "vitest run --coverage",
     "build": "tsx build.js",
     "publish": "npm run build && np",
-    "version": "auto-changelog -p && git add CHANGELOG.md"
+    "version": "auto-changelog -p && git add CHANGELOG.md",
+    "contributors:add": "all-contributors add"
   },
   "engines": {
     "node": ">=14.0.0"

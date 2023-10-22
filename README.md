@@ -83,7 +83,9 @@ It's simple, just take a look at our [Contributing](CONTRIBUTING.md) guide.
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dakshsinghrathore"><img src="https://avatars.githubusercontent.com/u/115932772?v=4?s=100" width="100px;" alt="Daksh Singh Rathore"/><br /><sub><b>Daksh Singh Rathore</b></sub></a><br /><a href="#research-dakshsinghrathore" title="Research">🔬</a> <a href="#doc-dakshsinghrathore" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dakshsinghrathore"><img src="https://avatars.githubusercontent.com/u/115932772?v=4?s=100" width="100px;" alt="Daksh Singh Rathore"/><br /><sub><b>Daksh Singh Rathore</b></sub></a><br /><a href="#research-dakshsinghrathore" title="Research">🔬</a> <a href="https://github.com/raphaelkieling/doctorenv/commits?author=dakshsinghrathore" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/harshvyas-22"><img src="https://avatars.githubusercontent.com/u/118657807?v=4?s=100" width="100px;" alt="harshvyas-22"/><br /><sub><b>harshvyas-22</b></sub></a><br /><a href="#design-harshvyas-22" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/raphaelkieling"><img src="https://avatars.githubusercontent.com/u/16259523?v=4?s=100" width="100px;" alt="Raphael Kieling"/><br /><sub><b>Raphael Kieling</b></sub></a><br /><a href="https://github.com/raphaelkieling/doctorenv/commits?author=raphaelkieling" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
